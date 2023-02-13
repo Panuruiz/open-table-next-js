@@ -10,7 +10,7 @@ export default function Home() {
       <main className="max-w-screen-2xl m-auto bg-white">
         <Header />
         <main>
-          <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
+          <div className="py-3 px-36 mt-10 flex flex-wrap">
             <RestaurantCard />
           </div>
         </main>
