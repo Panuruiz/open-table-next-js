@@ -1,3 +1,5 @@
+"use client";
+
 const ReservationsCard = () => {
   return (
     <div className="w-[27%] relative text-reg">
