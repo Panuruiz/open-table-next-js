@@ -12,7 +12,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
 
   return (
     <div className="w-64 m-3 overflow-hidden border rounded cursor-pointer h-72">
-      <Link href={`/restaurants/${slug}`}>
+      <Link href={`/restaurant/${slug}`}>
         <img src={main_image} alt={name} className="w-full h-36" />
         <div className="p-1">
           <h3 className="mb-2 text-2xl font-bold">{name}</h3>
