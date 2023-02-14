@@ -1,19 +1,15 @@
-import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <>
-      <NavBar />
-      <div className="h-64 bg-gradient-to-r from-[#0f1f47] to-[#5f6984] p-2">
-        <div className="text-center mt-10">
-          <h2 className="text-white text-5xl font-bold mb-2">
-            Find your table for any occasion
-          </h2>
-          <SearchBar />
-        </div>
+    <div className="h-64 bg-gradient-to-r from-[#0f1f47] to-[#5f6984] p-2">
+      <div className="mt-10 text-center">
+        <h2 className="mb-2 text-5xl font-bold text-white">
+          Find your table for any occasion
+        </h2>
+        <SearchBar />
       </div>
-    </>
+    </div>
   );
 };
 
