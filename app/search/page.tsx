@@ -4,10 +4,10 @@ import SearchSideBar from "./components/SearchSideBar";
 
 const Search = () => {
   return (
-    <main className="bg-gray-100 min-h-screen w-screen">
-      <main className="max-w-screen-2xl m-auto bg-white">
+    <main className="w-screen min-h-screen bg-gray-100">
+      <main className="m-auto bg-white max-w-screen-2xl">
         <SearchHeader />
-        <div className="flex py-4 m-auto w-2/3 justify-between items-start">
+        <div className="flex items-start justify-between w-2/3 py-4 m-auto">
           <SearchSideBar />
           <div className="w-5/6">
             <SearchRestaurantCard />
