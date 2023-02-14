@@ -5,10 +5,14 @@ import RestaurantHeader from "../components/RestaurantHeader";
 import RestaurantNavBar from "../components/RestaurantNavBar";
 import RestaurantLayout from "../layout";
 
-const RestaurantMenu = () => {
+type MenuProps = {
+  slug: string;
+};
+
+const RestaurantMenu = ({ slug }: MenuProps) => {
   return (
     <div className="bg-white w-[100%] rounded p-3 shadow">
-      <RestaurantNavBar />
+      <RestaurantNavBar slug={slug} />
       <MenuList />
     </div>
   );
