@@ -1,7 +1,11 @@
-const RestaurantTitle = () => {
+type RestaurantTitleProps = {
+  title: string;
+};
+
+const RestaurantTitle = ({ title }: RestaurantTitleProps) => {
   return (
-    <div className="mt-4 border-b pb-6">
-      <h3 className="font-bold text-6xl">Milesstone Grill</h3>
+    <div className="pb-6 mt-4 border-b">
+      <h3 className="text-6xl font-bold">{title}</h3>
     </div>
   );
 };

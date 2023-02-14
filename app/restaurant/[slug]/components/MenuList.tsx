@@ -1,14 +1,25 @@
+import { Item } from "@prisma/client";
 import MenuItem from "./MenuItem";
 
-const MenuList = () => {
+type MenuListProps = {
+  items: Item[];
+};
+
+const MenuList = ({ items }: MenuListProps) => {
   return (
-    <main className="bg-white mt-5">
+    <main className="mt-5 bg-white">
       <div>
-        <div className="mt-4 pb-1 mb-1">
-          <h1 className="font-bold text-4xl">Menu</h1>
+        <div className="pb-1 mt-4 mb-1">
+          <h1 className="text-4xl font-bold">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          <MenuItem />
+          {items.length ? (
+            items.map((item) => <MenuItem key={item.id} item={item} />)
+          ) : (
+            <p className="text-lg font-bold">
+              This Restaurnt doesn't have a Menu
+            </p>
+          )}
         </div>
       </div>
     </main>
