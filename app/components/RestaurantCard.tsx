@@ -22,9 +22,9 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
           </div>
           <div className="flex font-light capitalize text-reg">
             <p className="mr-3 ">{cuisine.name}</p>
-            <p className="mr-3">
+            <div className="mr-3">
               <PriceRange priceRange={price_range} />
-            </p>
+            </div>
             <p>{location.name}</p>
           </div>
           <p className="mt-1 text-sm font-bold">Booked 3 times today</p>

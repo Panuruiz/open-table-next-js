@@ -1,11 +1,13 @@
-import { PrismaClient } from "@prisma/client";
+import { PRICE_RANGE, PrismaClient } from "@prisma/client";
 import SearchHeader from "./components/SearchHeader";
 import SearchRestaurantCard from "./components/SearchRestaurantCard";
 import SearchSideBar from "./components/SearchSideBar";
 
 type SearchProps = {
   searchParams: {
-    city: string;
+    city?: string;
+    cuisine?: string;
+    price?: PRICE_RANGE;
   };
 };
 
@@ -65,7 +67,11 @@ const Search = async ({ searchParams }: SearchProps) => {
       <main className="bg-white max-w-screen-2xl">
         <SearchHeader />
         <div className="flex items-start justify-between w-2/3 py-4 m-auto">
-          <SearchSideBar cuisines={cuisines} locations={locations} />
+          <SearchSideBar
+            cuisine={cuisines}
+            location={locations}
+            searchParams={searchParams}
+          />
           <div className="w-4/5">
             {restaurants.length ? (
               restaurants.map((restaurant) => (

@@ -28,9 +28,9 @@ const SearchRestaurantCard = ({ restaurant }: SearchREstaurantCardProps) => {
         </div>
         <div className="mb-9">
           <div className="flex font-light text-reg">
-            <p className="mr-4">
+            <div className="mr-4">
               <PriceRange priceRange={restaurant.price_range} />
-            </p>
+            </div>
             <p className="mr-4 italic">{restaurant.cuisine.name}</p>
             <p className="mr-4 capitalize">{restaurant.location.name}</p>
           </div>
