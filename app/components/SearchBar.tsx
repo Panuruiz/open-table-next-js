@@ -6,6 +6,7 @@ import { useState } from "react";
 const SearchBar = () => {
   const router = useRouter();
   const [location, setLocation] = useState("");
+
   return (
     <div className="flex justify-center py-3 m-auto text-lg text-left">
       <input
@@ -20,6 +21,7 @@ const SearchBar = () => {
         onClick={() => {
           if (location === "") return; // Form check test
           router.push(`/search?city=${location}`);
+          setLocation("");
         }}
       >
         Let's go

@@ -1,21 +1,20 @@
-import { PRICE_RANGE } from "@prisma/client";
 import { ReactNode } from "react";
 
 type PriceRangeProps = {
-  priceRange: PRICE_RANGE;
+  priceRange: string;
 };
 
 const PriceRange = ({ priceRange }: PriceRangeProps) => {
-  const renderPrice: Record<PRICE_RANGE, ReactNode> = {
+  const renderPrice: Record<string, ReactNode> = {
     CHEAP: (
       <p className="flex mr-3">
-        $<span className="text-gray-400">$$</span>
+        $<span className="text-gray-400/25">$$</span>
       </p>
     ),
     REGULAR: (
       <p className="flex mr-3">
         $$
-        <span className="text-gray-400">$</span>
+        <span className="text-gray-400/25">$</span>
       </p>
     ),
     EXPENSIVE: <p className="flex mr-3">$$$</p>,

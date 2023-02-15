@@ -1,16 +1,64 @@
+import { PrismaClient } from "@prisma/client";
 import SearchHeader from "./components/SearchHeader";
 import SearchRestaurantCard from "./components/SearchRestaurantCard";
 import SearchSideBar from "./components/SearchSideBar";
 
-const Search = () => {
+type SearchProps = {
+  searchParams: {
+    city: string;
+  };
+};
+
+const prisma = new PrismaClient();
+
+const fetchRestaurantsByLocation = (city: string | undefined) => {
+  const select = {
+    id: true,
+    name: true,
+    main_image: true,
+    cuisine: true,
+    price_range: true,
+    location: true,
+    slug: true,
+  };
+
+  if (!city) return prisma.restaurant.findMany({ select: select });
+
+  return prisma.restaurant.findMany({
+    where: {
+      location: {
+        name: {
+          equals: city.toLowerCase(),
+        },
+      },
+    },
+    select: select,
+  });
+};
+
+const Search = async ({ searchParams }: SearchProps) => {
+  const restaurants = await fetchRestaurantsByLocation(searchParams.city);
+
+  console.log(searchParams.city);
   return (
     <main className="w-screen min-h-screen bg-gray-100">
-      <main className="m-auto bg-white max-w-screen-2xl">
+      <main className="bg-white max-w-screen-2xl">
         <SearchHeader />
         <div className="flex items-start justify-between w-2/3 py-4 m-auto">
           <SearchSideBar />
           <div className="w-5/6">
-            <SearchRestaurantCard />
+            {restaurants.length ? (
+              restaurants.map((restaurant) => (
+                <SearchRestaurantCard
+                  key={restaurant.id}
+                  restaurant={restaurant}
+                />
+              ))
+            ) : (
+              <p className="content-center font-semibold">
+                Sorry, we found no restaurants in this city.
+              </p>
+            )}
           </div>
         </div>
       </main>

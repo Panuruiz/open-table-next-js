@@ -1,28 +1,47 @@
 import Link from "next/link";
+import PriceRange from "../../components/PriceRange";
 
-const SearchRestaurantCard = () => {
+type SearchREstaurantCardProps = {
+  restaurant: {
+    name: string;
+    main_image: string;
+    cuisine: {
+      name: string;
+    };
+    price_range: string;
+    location: {
+      name: string;
+    };
+    slug: string;
+  };
+};
+
+const SearchRestaurantCard = ({ restaurant }: SearchREstaurantCardProps) => {
   return (
-    <div className="border-b flex pb-5">
-      <img
-        src="https://images.otstatic.com/prod1/49153814/2/medium.jpg"
-        alt=""
-        className="w-44 rounded"
-      />
+    <div className="flex pb-5 border-b">
+      <img src={restaurant.main_image} alt="" className="rounded w-44" />
       <div className="pl-5">
-        <h2 className="text-3xl">Aiāna Restaurant Collective</h2>
+        <h2 className="text-3xl">{restaurant.name}</h2>
         <div className="flex items-start">
           <div className="flex mb-2">*****</div>
           <p className="ml-2 text-sm">Awesome</p>
         </div>
         <div className="mb-9">
-          <div className="font-light flex text-reg">
-            <p className="mr-4">$$$</p>
-            <p className="mr-4">Mexican</p>
-            <p className="mr-4">Ottawa</p>
+          <div className="flex font-light text-reg">
+            <p className="mr-4">
+              <PriceRange priceRange={restaurant.price_range} />
+            </p>
+            <p className="mr-4">{restaurant.cuisine.name}</p>
+            <p className="mr-4">
+              {restaurant.location.name.charAt(0).toUpperCase() +
+                restaurant.location.name.slice(1)}
+            </p>
           </div>
         </div>
         <div className="text-red-600">
-          <Link href="/restaurant/milestones-grill">View more information</Link>
+          <Link href={`/restaurant/${restaurant.slug}`}>
+            View more information
+          </Link>
         </div>
       </div>
     </div>
