@@ -72,8 +72,10 @@ model User {
 
 model Review {
   id          Int     @id @default(autoincrement())
+  first_name  String
+  last_name   String
   rating      Int
-  comment     String
+  text     String
   user_id     Int
   user        User @relation(fields: [user_id], references: [id])
   restaurant_id Int
