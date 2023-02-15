@@ -64,6 +64,7 @@ const fetchRestaurantsByLocation = (searchParams: SearchParams) => {
     price_range: true,
     location: true,
     slug: true,
+    reviews: true,
   };
 
   return prisma.restaurant.findMany({
@@ -95,7 +96,6 @@ const Search = async ({ searchParams }: SearchProps) => {
   const locations = await fetchLocations();
   const cuisines = await fetchCuisine();
 
-  console.log(restaurants);
   return (
     <main className="w-screen min-h-screen bg-gray-100">
       <main className="bg-white max-w-screen-2xl">

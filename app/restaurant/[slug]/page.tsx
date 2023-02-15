@@ -1,25 +1,33 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 import Description from "./components/Description";
 import ImagesGallery from "./components/ImagesGallery";
 import Rating from "./components/Rating";
 import ReservationsCard from "./components/ReservationsCard";
 import RestaurantNavBar from "./components/RestaurantNavBar";
 import RestaurantTitle from "./components/RestaurantTitle";
+import ReviewCard from "./components/ReviewCard";
 import Reviews from "./components/Reviews";
 
-interface RestaurantInterface {
+type RestaurantPageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+type RestaurantPageType = {
   id: number;
   name: string;
   description: string;
   images: string[];
   slug: string;
-}
+  reviews: Review[];
+};
 
 const prisma = new PrismaClient();
 
 const fetchRestaurantBySlug = async (
   slug: string
-): Promise<RestaurantInterface> => {
+): Promise<RestaurantPageType> => {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
       slug,
@@ -30,6 +38,7 @@ const fetchRestaurantBySlug = async (
       description: true,
       images: true,
       slug: true,
+      reviews: true,
     },
   });
 
@@ -40,9 +49,8 @@ const fetchRestaurantBySlug = async (
   return restaurant;
 };
 
-const RestaurantDetails = async ({ params }: { params: { slug: string } }) => {
+const RestaurantDetails = async ({ params }: RestaurantPageProps) => {
   const restaurant = await fetchRestaurantBySlug(params.slug);
-  console.log(restaurant);
 
   return (
     <>
@@ -52,7 +60,13 @@ const RestaurantDetails = async ({ params }: { params: { slug: string } }) => {
         <Rating />
         <Description description={restaurant.description} />
         <ImagesGallery images={restaurant.images} />
-        <Reviews />
+        {restaurant.reviews.length && (
+          <Reviews numberOfReviews={restaurant.reviews.length}>
+            {restaurant.reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </Reviews>
+        )}
       </div>
       <ReservationsCard />
     </>
