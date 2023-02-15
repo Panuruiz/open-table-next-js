@@ -13,7 +13,7 @@ type SearchSideBarProps = {
   searchParams: {
     city?: string;
     cuisine?: string;
-    price?: PRICE_RANGE;
+    priceRange?: PRICE_RANGE;
   };
 };
 
@@ -87,7 +87,7 @@ const SearchSideBar = ({
                 pathname: "/search",
                 query: {
                   ...searchParams,
-                  price: price.price,
+                  priceRange: price.price,
                 },
               }}
               key={price.price}

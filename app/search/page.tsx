@@ -3,17 +3,59 @@ import SearchHeader from "./components/SearchHeader";
 import SearchRestaurantCard from "./components/SearchRestaurantCard";
 import SearchSideBar from "./components/SearchSideBar";
 
+type SearchParams = {
+  city?: string;
+  cuisine?: string;
+  priceRange?: PRICE_RANGE;
+};
+
 type SearchProps = {
-  searchParams: {
-    city?: string;
-    cuisine?: string;
-    price?: PRICE_RANGE;
+  searchParams: SearchParams;
+};
+
+type WhereType = {
+  location?: {
+    name?: {
+      equals?: string;
+    };
+  };
+  cuisine?: {
+    name?: {
+      equals?: string;
+    };
+  };
+  price_range?: {
+    equals?: PRICE_RANGE;
   };
 };
 
 const prisma = new PrismaClient();
 
-const fetchRestaurantsByLocation = (city: string | undefined) => {
+const fetchRestaurantsByLocation = (searchParams: SearchParams) => {
+  const where: WhereType = {};
+
+  if (searchParams.city) {
+    where.location = {
+      name: {
+        equals: searchParams.city.toLowerCase(),
+      },
+    };
+  }
+
+  if (searchParams.cuisine) {
+    where.cuisine = {
+      name: {
+        equals: searchParams.cuisine.toLowerCase(),
+      },
+    };
+  }
+
+  if (searchParams.priceRange) {
+    where.price_range = {
+      equals: searchParams.priceRange,
+    };
+  }
+
   const select = {
     id: true,
     name: true,
@@ -24,16 +66,8 @@ const fetchRestaurantsByLocation = (city: string | undefined) => {
     slug: true,
   };
 
-  if (!city) return prisma.restaurant.findMany({ select: select });
-
   return prisma.restaurant.findMany({
-    where: {
-      location: {
-        name: {
-          equals: city.toLowerCase(),
-        },
-      },
-    },
+    where,
     select: select,
   });
 };
@@ -57,11 +91,11 @@ const fetchCuisine = () => {
 };
 
 const Search = async ({ searchParams }: SearchProps) => {
-  const restaurants = await fetchRestaurantsByLocation(searchParams.city);
+  const restaurants = await fetchRestaurantsByLocation(searchParams);
   const locations = await fetchLocations();
   const cuisines = await fetchCuisine();
 
-  console.log(searchParams.city);
+  console.log(restaurants);
   return (
     <main className="w-screen min-h-screen bg-gray-100">
       <main className="bg-white max-w-screen-2xl">
