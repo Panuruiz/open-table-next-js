@@ -57,7 +57,7 @@ const RestaurantDetails = async ({ params }: RestaurantPageProps) => {
       <div className="bg-white w-[70%] rounded p-3 shadow">
         <RestaurantNavBar slug={restaurant.slug} />
         <RestaurantTitle title={restaurant.name} />
-        <Rating />
+        <Rating reviews={restaurant.reviews} />
         <Description description={restaurant.description} />
         <ImagesGallery images={restaurant.images} />
         {restaurant.reviews.length && (

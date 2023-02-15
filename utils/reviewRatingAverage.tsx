@@ -21,6 +21,32 @@ export const getReviewRatingAverage = (reviews: Review[]) => {
   return Math.floor(average);
 };
 
+export const getReviewRAtingAverageWithDecimals = (reviews: Review[]) => {
+  if (reviews.length === 0) {
+    return 0;
+  }
+
+  let sum = 0;
+
+  reviews.forEach((review) => {
+    sum += review.rating;
+  });
+
+  const average = sum / reviews.length;
+
+  if (average % 1 === 0 || average === 5) {
+    return average;
+  }
+
+  const decimals = () => {
+    const decimal = average.toString().split(".")[1];
+
+    return decimal[0];
+  };
+
+  return Math.floor(average) + "." + decimals();
+};
+
 export const starsRecord: Record<number, ReactNode> = {
   0: <div className="flex mb-2 text-gray-400/25">★★★★★</div>,
   1: (

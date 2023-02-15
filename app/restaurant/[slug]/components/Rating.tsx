@@ -1,12 +1,27 @@
-const Rating = () => {
+import { Review } from "@prisma/client";
+import {
+  getReviewRatingAverage,
+  getReviewRAtingAverageWithDecimals,
+  starsRecord,
+} from "../../../../utils/reviewRatingAverage";
+
+type RatingProps = {
+  reviews: Review[];
+};
+
+const Rating = ({ reviews }: RatingProps) => {
   return (
-    <div className="flex items-end">
-      <div className="ratings mt-2 flex items-center">
-        <p>*****</p>
-        <p className="text-reg ml-3">4.9</p>
-      </div>
-      <div>
-        <p className="text-reg ml-4">600 Reviews</p>
+    <div className="flex items-center pt-4 text-reg">
+      <div className="flex items-center">
+        <div className="flex">
+          {starsRecord[getReviewRatingAverage(reviews)]}
+          <p className="ml-3 text-reg">
+            {getReviewRAtingAverageWithDecimals(reviews)}
+          </p>
+          <p className="ml-4 ">
+            {reviews.length || 0} Review{reviews.length === 1 ? "" : "s"}
+          </p>
+        </div>
       </div>
     </div>
   );

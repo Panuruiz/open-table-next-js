@@ -1,5 +1,4 @@
 import { Review } from "@prisma/client";
-import getRandomHexColor from "../../../../utils/getRandomHexColor";
 import getTheInitials from "../../../../utils/getTheInitials";
 import {
   ratingAdjectiveRecord,
@@ -13,12 +12,28 @@ type ReviewCardProps = {
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const { first_name, last_name, rating, text } = review;
 
+  const getUserColor = () => {
+    const colors = [
+      "bg-blue-400",
+      "bg-red-400",
+      "bg-green-400",
+      "bg-yellow-400",
+      "bg-purple-400",
+      "bg-pink-400",
+      "bg-gray-400",
+    ];
+
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    return randomColor;
+  };
+
   return (
     <div className="border-b pb-7 mb-7">
       <div className="flex">
         <div className="flex flex-col items-center w-1/6">
           <div
-            className={`flex items-center justify-center w-16 h-16 bg-blue-400 rounded-full`}
+            className={`flex items-center justify-center w-16 h-16 ${getUserColor()} rounded-full`}
           >
             <p className="text-2xl text-white">
               {getTheInitials(first_name, last_name)}
