@@ -4,8 +4,8 @@ import PriceRange from "../../components/PriceRange";
 import {
   getReviewRatingAverage,
   ratingAdjectiveRecord,
-  starsRecord,
 } from "../../../utils/reviewRatingAverage";
+import Stars from "../../components/Stars";
 
 type SearchREstaurantCardProps = {
   restaurant: {
@@ -26,19 +26,25 @@ type SearchREstaurantCardProps = {
 const SearchRestaurantCard = ({ restaurant }: SearchREstaurantCardProps) => {
   return (
     <div className="flex pb-5 border-b">
-      <img
-        src={restaurant.main_image}
-        alt=""
-        className="object-cover object-center rounded w-44 h-44"
-      />
-      <div className="pl-5">
-        <h2 className="text-3xl">{restaurant.name}</h2>
+      <Link href={`/restaurant/${restaurant.slug}`}>
+        <img
+          src={restaurant.main_image}
+          alt=""
+          className="object-cover object-center transition duration-300 ease-in-out rounded hover:scale-110 w-44 h-44"
+        />
+      </Link>
+      <div className="pt-2 pl-4">
+        <h2 className="mb-4 text-3xl">{restaurant.name}</h2>
         <div className="flex items-start">
           <div className="flex mb-2">
-            {starsRecord[getReviewRatingAverage(restaurant.reviews)]}
+            <Stars reviews={restaurant.reviews} />
           </div>
           <p className="ml-2 text-sm">
-            {ratingAdjectiveRecord[getReviewRatingAverage(restaurant.reviews)]}
+            {!restaurant.reviews.length
+              ? "Not reviewed yet"
+              : ratingAdjectiveRecord[
+                  getReviewRatingAverage(restaurant.reviews)
+                ]}
           </p>
         </div>
         <div className="mb-9">

@@ -1,8 +1,6 @@
 import { Review } from "@prisma/client";
-import {
-  ratingAdjectiveRecord,
-  starsRecord,
-} from "../../../../utils/reviewRatingAverage";
+import { ratingAdjectiveRecord } from "../../../../utils/reviewRatingAverage";
+import Stars from "../../../components/Stars";
 
 type ReviewCardProps = {
   review: Review;
@@ -45,7 +43,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
         <div className="w-5/6 ml-10">
           <div className="flex items-center">
             <div className="flex mr-5">
-              <div className="mr-4 text-yellow-400">{starsRecord[rating]}</div>
+              <Stars rating={rating} />
               {ratingAdjectiveRecord[rating]}
             </div>
           </div>

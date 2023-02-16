@@ -1,11 +1,14 @@
 import { Review } from "@prisma/client";
-import { ReactNode } from "react";
+import fullStar from "../public/icons/full-star.png";
+import halfStar from "../public/icons/half-star.png";
+import emptyStar from "../public/icons/empty-star.png";
+import Image from "next/image";
 
 export const getReviewRatingAverage = (
-  reviews: Review[],
+  reviews?: Review[],
   options?: { oneDecimal?: boolean }
 ) => {
-  if (reviews.length === 0) {
+  if (!reviews?.length) {
     return 0;
   }
 
@@ -18,43 +21,14 @@ export const getReviewRatingAverage = (
   const average = sum / reviews.length;
 
   if (average % 1 === 0 || average === 5) {
-    return average;
+    return Number(average);
   }
 
   if (options?.oneDecimal) {
-    return average.toFixed(1);
+    return Number(average.toFixed(1));
   }
 
-  return Math.floor(average);
-};
-
-export const starsRecord: Record<number, ReactNode> = {
-  0: <div className="flex mb-2 text-gray-400/25">★★★★★</div>,
-  1: (
-    <div className="flex mb-2 text-gray-400/25">
-      <span className="text-yellow-400">★</span>★★★★
-    </div>
-  ),
-  2: (
-    <div className="flex mb-2 text-gray-400/25">
-      <span className="text-yellow-400">★★</span>★★★
-    </div>
-  ),
-  3: (
-    <div className="flex mb-2 text-gray-400/25">
-      <span className="text-yellow-400">★★★</span>★★
-    </div>
-  ),
-  4: (
-    <div className="flex mb-2 text-gray-400/25">
-      <span className="text-yellow-400">★★★★</span>★
-    </div>
-  ),
-  5: (
-    <div className="flex mb-2 text-gray-400/25">
-      <span className="text-yellow-400">★★★★★</span>
-    </div>
-  ),
+  return Number(Math.floor(average));
 };
 
 export const ratingAdjectiveRecord: Record<number, string> = {
