@@ -6,8 +6,9 @@ import { useState } from "react";
 const SearchBar = () => {
   const router = useRouter();
   const [location, setLocation] = useState("");
+
   return (
-    <div className="text-left text-lg py-3 m-auto flex justify-center">
+    <div className="flex justify-center py-3 m-auto text-lg text-left">
       <input
         className="rounded  mr-3 p-2 w-[450px]"
         type="text"
@@ -16,10 +17,11 @@ const SearchBar = () => {
         onChange={(e) => setLocation(e.target.value)}
       />
       <button
-        className="rounded bg-red-600 px-9 py-2 text-white"
+        className="py-2 text-white bg-red-600 rounded px-9"
         onClick={() => {
-          if (location === "banana") return; // Form check test
-          router.push("/search");
+          if (location === "") return; // Form check test
+          router.push(`/search?city=${location}`);
+          setLocation("");
         }}
       >
         Let's go

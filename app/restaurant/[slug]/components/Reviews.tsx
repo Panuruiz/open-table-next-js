@@ -1,14 +1,19 @@
+import { ReactNode } from "react";
 import ReviewCard from "./ReviewCard";
 
-const Reviews = () => {
+type ReviewsProps = {
+  children: ReactNode;
+  numberOfReviews: number;
+};
+
+const Reviews = ({ children, numberOfReviews }: ReviewsProps) => {
   return (
     <div>
-      <h3 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">
-        What 100 people are saying
+      <h3 className="pb-5 mt-10 text-3xl font-bold mb-7 borber-b">
+        What {numberOfReviews} {numberOfReviews === 1 ? "person" : "people"}{" "}
+        {numberOfReviews === 1 ? "is" : "are"} saying
       </h3>
-      <div>
-        <ReviewCard />
-      </div>
+      <div>{children}</div>
     </div>
   );
 };

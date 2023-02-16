@@ -30,8 +30,6 @@ const fetchRestaurantMenu = async (slug: string): Promise<Item[]> => {
 const RestaurantMenu = async ({ params }: MenuProps) => {
   const items = await fetchRestaurantMenu(params.slug);
 
-  console.log(items);
-
   return (
     <div className="bg-white w-[100%] rounded p-3 shadow">
       <RestaurantNavBar slug={params.slug} />
