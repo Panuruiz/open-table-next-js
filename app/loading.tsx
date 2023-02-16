@@ -9,9 +9,7 @@ const Loading = () => {
           <div
             key={item}
             className="w-64 m-3 overflow-hidden border rounded animate-puls bg-slate-200 h-72 cursos-pointer"
-          >
-            ""
-          </div>
+          ></div>
         ))}
       </div>
     </main>
