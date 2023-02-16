@@ -1,5 +1,4 @@
 import { Review } from "@prisma/client";
-import getTheInitials from "../../../../utils/getTheInitials";
 import {
   ratingAdjectiveRecord,
   starsRecord,
@@ -36,7 +35,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
             className={`flex items-center justify-center w-16 h-16 ${getUserColor()} rounded-full`}
           >
             <p className="text-2xl text-white">
-              {getTheInitials(first_name, last_name)}
+              {first_name[0].toUpperCase()} {last_name[0].toUpperCase()}
             </p>
           </div>
           <p className="mt-2 text-center">
@@ -46,7 +45,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
         <div className="w-5/6 ml-10">
           <div className="flex items-center">
             <div className="flex mr-5">
-              <span className="mr-4">{starsRecord[rating]}</span>
+              <div className="mr-4 text-yellow-400">{starsRecord[rating]}</div>
               {ratingAdjectiveRecord[rating]}
             </div>
           </div>
