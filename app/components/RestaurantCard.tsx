@@ -22,7 +22,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
           <h3 className="mb-2 text-2xl font-bold">{name}</h3>
           <div className="flex items-start">
             <div className="flex mb-2">
-              {starsRecord[getReviewRatingAverage(reviews)]}
+              {starsRecord[Number(getReviewRatingAverage(reviews))]}
             </div>
             <p className="ml-2">
               {reviews.length} review{reviews.length === 1 ? "" : "s"}

@@ -1,7 +1,6 @@
 import { Review } from "@prisma/client";
 import {
   getReviewRatingAverage,
-  getReviewRAtingAverageWithDecimals,
   starsRecord,
 } from "../../../../utils/reviewRatingAverage";
 
@@ -14,9 +13,9 @@ const Rating = ({ reviews }: RatingProps) => {
     <div className="flex items-center pt-4 text-reg">
       <div className="flex items-center">
         <div className="flex">
-          {starsRecord[getReviewRatingAverage(reviews)]}
+          {starsRecord[Number(getReviewRatingAverage(reviews))]}
           <p className="ml-3 text-reg">
-            {getReviewRAtingAverageWithDecimals(reviews)}
+            {getReviewRatingAverage(reviews, { oneDecimal: true })}
           </p>
           <p className="ml-4 ">
             {reviews.length || 0} Review{reviews.length === 1 ? "" : "s"}

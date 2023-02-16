@@ -1,7 +1,10 @@
 import { Review } from "@prisma/client";
 import { ReactNode } from "react";
 
-export const getReviewRatingAverage = (reviews: Review[]) => {
+export const getReviewRatingAverage = (
+  reviews: Review[],
+  options?: { oneDecimal?: boolean }
+) => {
   if (reviews.length === 0) {
     return 0;
   }
@@ -16,35 +19,13 @@ export const getReviewRatingAverage = (reviews: Review[]) => {
 
   if (average % 1 === 0 || average === 5) {
     return average;
+  }
+
+  if (options?.oneDecimal) {
+    return average.toFixed(1);
   }
 
   return Math.floor(average);
-};
-
-export const getReviewRAtingAverageWithDecimals = (reviews: Review[]) => {
-  if (reviews.length === 0) {
-    return 0;
-  }
-
-  let sum = 0;
-
-  reviews.forEach((review) => {
-    sum += review.rating;
-  });
-
-  const average = sum / reviews.length;
-
-  if (average % 1 === 0 || average === 5) {
-    return average;
-  }
-
-  const decimals = () => {
-    const decimal = average.toString().split(".")[1];
-
-    return decimal[0];
-  };
-
-  return Math.floor(average) + "." + decimals();
 };
 
 export const starsRecord: Record<number, ReactNode> = {
