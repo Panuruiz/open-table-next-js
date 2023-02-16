@@ -85,8 +85,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .setExpirationTime("24h")
       .sign(secret);
 
-    res.status(200).json({ message: token });
+    return res.status(200).json({ token: token });
   }
+
+  res.status(404).json({ errorMessage: "Undefined endpoint" });
 };
 
 export default handler;
