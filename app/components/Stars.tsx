@@ -31,8 +31,15 @@ const getStars = (rating: number) => {
     }
   }
 
-  return stars.map((star) => {
-    return <Image alt="a star image" className="w-4 h-4 mr-1" src={star} />;
+  return stars.map((star, index) => {
+    return (
+      <Image
+        alt="a star image"
+        className="w-4 h-4 mr-1"
+        key={index}
+        src={star}
+      />
+    );
   });
 };
 

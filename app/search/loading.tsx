@@ -17,9 +17,10 @@ const Loading = () => {
           </div>
           <div className="w-4/5">
             {[1, 2, 3, 4, 5].map((item) => (
-              <div className="mt-4 border-b pb-6 animate-pulse bg-slate-200 w-[400px] h-16 rounded">
-                {item}
-              </div>
+              <div
+                key={item}
+                className="mt-4 border-b pb-6 animate-pulse bg-slate-200 w-[400px] h-16 rounded"
+              ></div>
             ))}
           </div>
         </div>
