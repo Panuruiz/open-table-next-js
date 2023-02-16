@@ -7,6 +7,7 @@ import RestaurantNavBar from "./components/RestaurantNavBar";
 import RestaurantTitle from "./components/RestaurantTitle";
 import ReviewCard from "./components/ReviewCard";
 import Reviews from "./components/Reviews";
+import { notFound } from "next/navigation";
 
 type RestaurantPageProps = {
   params: {
@@ -43,7 +44,7 @@ const fetchRestaurantBySlug = async (
   });
 
   if (!restaurant) {
-    throw new Error("Restaurant not found");
+    notFound();
   }
 
   return restaurant;
