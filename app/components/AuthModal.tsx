@@ -4,8 +4,9 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import AuthModalForm from "./AuthModalForm";
+import useAuth from "../../hooks/useAuth";
 
 type AuthModalProps = {
   isSignIn?: boolean;
@@ -24,8 +25,30 @@ const style = {
 
 export default function AuthModal({ isSignIn }: AuthModalProps) {
   const [open, setOpen] = useState(false);
+  const [inputs, setInputs] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    city: "",
+    password: "",
+  });
+  const [disabled, setDisabled] = useState(true);
+
+  const { signIn } = useAuth();
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    return setInputs({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      city: "",
+      password: "",
+    });
+  };
 
   const renderContentIfSignedIn = (
     signInContent: string,
@@ -38,15 +61,31 @@ export default function AuthModal({ isSignIn }: AuthModalProps) {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const [inputs, setInputs] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    city: "",
-    password: "",
-  });
+  useEffect(() => {
+    if (isSignIn) {
+      if (inputs.email && inputs.password) {
+        return setDisabled(false);
+      }
+      setDisabled(true);
+    }
 
+    if (
+      inputs.firstName &&
+      inputs.lastName &&
+      inputs.email &&
+      inputs.city &&
+      inputs.password
+    ) {
+      return setDisabled(false);
+    }
+  }, [inputs]);
+
+  const handleClick = () => {
+    if (isSignIn) {
+      signIn(inputs.email, inputs.password);
+      handleClose();
+    }
+  };
   return (
     <div>
       <button
@@ -87,7 +126,11 @@ export default function AuthModal({ isSignIn }: AuthModalProps) {
                   isSignIn={isSignIn}
                   handleChangeInput={handleChangeInput}
                 />
-                <button className="w-full p-3 mt-6 text-sm text-white uppercase bg-red-600 rounded disabled:bg-gray-400">
+                <button
+                  className="w-full p-3 mt-6 text-sm text-white uppercase bg-red-600 rounded disabled:bg-gray-400"
+                  disabled={disabled}
+                  onClick={handleClick}
+                >
                   {renderContentIfSignedIn("Sign in", "Create account")}
                 </button>
               </div>
