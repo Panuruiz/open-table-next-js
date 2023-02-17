@@ -5,7 +5,7 @@ type AuthModalFormProps = {
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber: string;
+    phone: string;
     city: string;
     password: string;
   };
@@ -56,9 +56,9 @@ const AuthModalForm = ({
             type="tel"
             className="border rounded p-2 py-3 w-[49%]"
             placeholder="Phone number"
-            value={inputs.phoneNumber}
+            value={inputs.phone}
             onChange={handleChangeInput}
-            name="phoneNumber"
+            name="phone"
           />
           <input
             type="text"

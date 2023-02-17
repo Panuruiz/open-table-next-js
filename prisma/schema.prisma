@@ -84,6 +84,11 @@ model Review {
   updated_at  DateTime @updatedAt
 }
 
+model Color {
+  id          Int     @id @default(autoincrement())
+  name        String
+}
+
 enum PRICE_RANGE {
   CHEAP
   REGULAR
