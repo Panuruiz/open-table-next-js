@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+import { setCookie } from "cookies-next";
 
 const prisma = new PrismaClient();
 
@@ -32,20 +33,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ errorMessage: errors[0] });
     }
 
-    const userWithEmail = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email,
       },
     });
 
-    if (!userWithEmail) {
+    if (!user) {
       return res.status(401).json({ errorMessage: "Invalid credentials" });
     }
 
-    const passwordMatch = await bcrypt.compare(
-      password,
-      userWithEmail.password
-    );
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ errorMessage: "Invalid credentials" });
@@ -56,13 +54,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
     const token = await new jose.SignJWT({
-      email: userWithEmail.email,
+      email: user.email,
     })
       .setProtectedHeader({ alg })
       .setExpirationTime("24h")
       .sign(secret);
 
-    return res.status(200).json({ token: token });
+    setCookie("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
+
+    return res.status(200).json({
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      city: user.city,
+    });
   }
 
   res.status(404).json({ errorMessage: "Undefined endpoint" });
