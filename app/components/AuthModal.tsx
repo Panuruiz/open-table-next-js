@@ -39,7 +39,7 @@ export default function AuthModal({ isSignIn }: AuthModalProps) {
   const [disabled, setDisabled] = useState(true);
 
   const { signIn, signUp } = useAuth();
-  const { loading, error, data } = useContext(AuthenticationContext);
+  const { loading, error } = useContext(AuthenticationContext);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
