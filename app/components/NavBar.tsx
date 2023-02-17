@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { data } = useContext(AuthenticationContext);
+  const { data, loading } = useContext(AuthenticationContext);
   return (
     <nav className="flex justify-between p-2 bg-white">
       <h1>
@@ -15,16 +15,20 @@ const NavBar = () => {
         </Link>
       </h1>
       <div>
-        <div className="flex">
-          {data ? (
-            <button className="p-1 px-4 mr-3 border rounded">Logout</button>
-          ) : (
-            <>
-              <AuthModal isSignIn />
-              <AuthModal />
-            </>
-          )}
-        </div>
+        {loading ? null : (
+          <div className="flex">
+            {data ? (
+              <button className="p-1 px-4 mr-3 text-white transition-colors ease-linear bg-blue-400 border rounded hover:bg-red-600">
+                Logout
+              </button>
+            ) : (
+              <>
+                <AuthModal isSignIn />
+                <AuthModal />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );
