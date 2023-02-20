@@ -71,17 +71,21 @@ export const findAvailableTables = async ({
   });
 
   searchTimesWithTables.forEach((searchTimeWithTables) => {
-    searchTimeWithTables.tables.filter((table) => {
-      if (bookingTablesObject[searchTimeWithTables.date.toISOString()]) {
-        if (
-          bookingTablesObject[searchTimeWithTables.date.toISOString()][table.id]
-        ) {
-          return false;
+    searchTimeWithTables.tables = searchTimeWithTables.tables.filter(
+      (table) => {
+        if (bookingTablesObject[searchTimeWithTables.date.toISOString()]) {
+          if (
+            bookingTablesObject[searchTimeWithTables.date.toISOString()][
+              table.id
+            ]
+          ) {
+            return false;
+          }
         }
-      }
 
-      return true;
-    });
+        return true;
+      }
+    );
   });
 
   return searchTimesWithTables;

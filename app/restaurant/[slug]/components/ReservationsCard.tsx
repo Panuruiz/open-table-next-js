@@ -88,7 +88,9 @@ const ReservationsCard = ({
             onChange={(e) => setPartySize(e.target.value)}
           >
             {partySizes.map((size) => (
-              <option value={size.value}>{size.label}</option>
+              <option key={size.value} value={size.value}>
+                {size.label}
+              </option>
             ))}
           </select>
         </div>
@@ -144,7 +146,9 @@ const ReservationsCard = ({
                     </p>
                   </Link>
                 ) : (
-                  <p className="w-24 p-2 mb-3 mr-3 bg-gray-300 rounded"></p>
+                  <p className="w-24 p-2 mb-3 mr-3 text-sm font-bold text-center bg-gray-300 rounded">
+                    Full
+                  </p>
                 )
               )}
             </div>
