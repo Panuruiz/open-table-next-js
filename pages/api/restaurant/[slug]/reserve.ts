@@ -1,4 +1,7 @@
+import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+
+const prisma = new PrismaClient();
 
 type ReserveDataQueryType = {
   slug: string;
@@ -7,15 +10,27 @@ type ReserveDataQueryType = {
   partySize: string;
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { slug, day, time, partySize } = req.query as ReserveDataQueryType;
 
-  return res.status(200).json({
-    slug,
-    day,
-    time,
-    partySize,
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
   });
+
+  if (!restaurant) {
+    return res.status(400).json({ message: "Invalid data provided" });
+  }
+
+  if (
+    new Date(`${day}T${time}`) < new Date(`${day}T${restaurant.open_time}`) ||
+    new Date(`${day}T${time}`) > new Date(`${day}T${restaurant.close_time}`)
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Restaurant is not open at that time" });
+  }
 };
 
 export default handler;
