@@ -59,7 +59,50 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: "No availability, cannot book" });
   }
 
-  return res.status(200).json({ searchTimeWithTables });
+  const tablesCount: {
+    2: number[];
+    4: number[];
+  } = {
+    2: [],
+    4: [],
+  };
+
+  searchTimeWithTables.tables.forEach((table) => {
+    if (table.seats === 2) {
+      tablesCount[2].push(table.id);
+    } else {
+      tablesCount[4].push(table.id);
+    }
+  });
+
+  const tablesToBook: number[] = [];
+  let seatsRemaining = parseInt(partySize);
+
+  while (seatsRemaining > 0) {
+    if (seatsRemaining >= 3) {
+      if (tablesCount[4].length) {
+        tablesToBook.push(tablesCount[4][0]);
+        tablesCount[4].shift();
+        seatsRemaining -= 4;
+      } else {
+        tablesToBook.push(tablesCount[2][0]);
+        tablesCount[2].shift();
+        seatsRemaining -= 2;
+      }
+    } else {
+      if (tablesCount[2].length) {
+        tablesToBook.push(tablesCount[2][0]);
+        tablesCount[2].shift();
+        seatsRemaining -= 2;
+      } else {
+        tablesToBook.push(tablesCount[4][0]);
+        tablesCount[4].shift();
+        seatsRemaining -= 4;
+      }
+    }
+  }
+
+  return res.status(200).json({ tablesToBook });
 };
 
 export default handler;
