@@ -1,23 +1,48 @@
 "use client";
 
+import { CircularProgress } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { partySize as partySizes, times } from "../../../../data";
+import useAvailabilities from "../../../../hooks/useAvailabilities";
+import { convertToDisplayTime } from "../../../../utils/convertToDisplayTime";
 
 type ReservationsCardProps = {
   openTime: string;
   closeTime: string;
+  slug: string;
 };
 
-const ReservationsCard = ({ closeTime, openTime }: ReservationsCardProps) => {
+const ReservationsCard = ({
+  closeTime,
+  openTime,
+  slug,
+}: ReservationsCardProps) => {
+  const { data, loading, error, fetchAvailabilities } = useAvailabilities();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-
+  const [time, setTime] = useState<string>(openTime);
+  const [partySize, setPartySize] = useState<string>("2");
+  const [day, setDay] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
+  console.log(data);
   const handleChangeDate = (date: Date | null) => {
     if (date) {
+      setDay(date.toISOString().split("T")[0]);
       return setSelectedDate(date);
     }
 
     return setSelectedDate(null);
+  };
+
+  const handleClick = () => {
+    fetchAvailabilities({
+      slug,
+      day,
+      time,
+      partySize,
+    });
   };
 
   const getFilteredTimes = () => {
@@ -52,26 +77,38 @@ const ReservationsCard = ({ closeTime, openTime }: ReservationsCardProps) => {
         </div>
         <div className="flex flex-col my-3">
           <label htmlFor="">Party size</label>
-          <select name="" className="py-3 font-light border-b" id="">
+          <select
+            name=""
+            className="py-3 font-light border-b"
+            id=""
+            value={partySize}
+            onChange={(e) => setPartySize(e.target.value)}
+          >
             {partySizes.map((size) => (
               <option value={size.value}>{size.label}</option>
             ))}
           </select>
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-wrap justify-between">
           <div className="flex flex-col w-[48%]">
             <label htmlFor="">Date</label>
             <DatePicker
               selected={selectedDate}
               onChange={handleChangeDate}
-              className="py-3 font-light border-b text-reg w-28"
+              className="w-24 py-3 font-light border-b"
               dateFormat="MMMM d"
               wrapperClassName="w-[48%]"
             />
           </div>
           <div className="flex flex-col w-[48%]">
             <label htmlFor="">Time</label>
-            <select name="" id="" className="py-3 font-light border-b">
+            <select
+              name=""
+              id=""
+              className="py-3 font-light border-b"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+            >
               {getFilteredTimes().map((time) => (
                 <option key={time.time} value={time.time}>
                   {time.displayTime}
@@ -81,10 +118,35 @@ const ReservationsCard = ({ closeTime, openTime }: ReservationsCardProps) => {
           </div>
         </div>
         <div className="mt-5">
-          <button className="w-full h-16 px-4 font-bold text-white bg-red-600 rounded">
-            Find a Time
+          <button
+            className="w-full h-16 px-4 font-bold text-white bg-red-600 rounded"
+            onClick={handleClick}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress color="inherit" /> : "Find a Table"}
           </button>
         </div>
+        {data && data.length ? (
+          <div className="mt-4">
+            <p className="text-reg">Select a Time</p>
+            <div className="flex flex-wrap mt-2">
+              {data.map((timeToSelect) =>
+                timeToSelect.available ? (
+                  <Link
+                    href={`/reserve/${slug}?date=${day}T${timeToSelect.time}&partySize=${partySize}`}
+                    className="w-24 p-2 mb-3 mr-3 text-center text-white bg-red-600 rounded cursor-pointer"
+                  >
+                    <p className="text-sm font-bold">
+                      {convertToDisplayTime(timeToSelect.time)}
+                    </p>
+                  </Link>
+                ) : (
+                  <p className="w-24 p-2 mb-3 mr-3 bg-gray-300 rounded"></p>
+                )
+              )}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
