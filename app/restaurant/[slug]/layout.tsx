@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import type { ReactNode } from "react";
 import RestaurantHeader from "./components/RestaurantHeader";
 
@@ -8,7 +9,21 @@ type RestaurantLayoutProps = {
   };
 };
 
-const RestaurantLayout = ({ children, params }: RestaurantLayoutProps) => {
+const prisma = new PrismaClient();
+
+const RestaurantLayout = async ({
+  children,
+  params,
+}: RestaurantLayoutProps) => {
+  const restaurantImage = await prisma.restaurant.findUnique({
+    where: {
+      slug: params.slug,
+    },
+    select: {
+      main_image: true,
+    },
+  });
+
   const renderTitle = () => {
     const nameArray = params.slug.split("-");
 
@@ -19,7 +34,10 @@ const RestaurantLayout = ({ children, params }: RestaurantLayoutProps) => {
 
   return (
     <main>
-      <RestaurantHeader title={renderTitle()} />
+      <RestaurantHeader
+        title={renderTitle()}
+        mainImage={restaurantImage?.main_image}
+      />
       <div className="flex items-start justify-between w-2/3 m-auto 0 -mt-11">
         {children}
       </div>

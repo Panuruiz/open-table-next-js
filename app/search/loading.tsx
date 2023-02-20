@@ -10,9 +10,20 @@ const Loading = () => {
         <div className="flex items-start justify-between w-2/3 py-4 m-auto">
           <div className="w-1/5 mr-2">
             <div className="flex flex-col pb-4 border-b">
-              <div className="w-full h-5 mb-3 animate-pulse">""</div>
-              <div className="w-full h-5 mb-3 animate-pulse">""</div>
-              <div className="w-full h-5 mb-3 animate-pulse">""</div>
+              <div className="w-full h-5 mb-6 bg-gray-500 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+            </div>
+            <div className="flex flex-col pb-4 border-b">
+              <div className="w-full h-5 mb-6 bg-gray-500 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
+            </div>
+            <div className="flex flex-col pb-4 border-b">
+              <div className="w-full h-5 mb-6 bg-gray-500 rounded animate-pulse" />
+              <div className="w-full h-5 mb-3 bg-gray-400 rounded animate-pulse" />
             </div>
           </div>
           <div className="w-4/5">
