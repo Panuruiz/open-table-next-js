@@ -6,7 +6,10 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { partySize as partySizes, times } from "../../../../data";
 import useAvailabilities from "../../../../hooks/useAvailabilities";
-import { convertToDisplayTime } from "../../../../utils/convertToDisplayTime";
+import {
+  convertToDisplayTime,
+  Time,
+} from "../../../../utils/convertToDisplayTime";
 
 type ReservationsCardProps = {
   openTime: string;
@@ -137,7 +140,7 @@ const ReservationsCard = ({
                     className="w-24 p-2 mb-3 mr-3 text-center text-white bg-red-600 rounded cursor-pointer"
                   >
                     <p className="text-sm font-bold">
-                      {convertToDisplayTime(timeToSelect.time)}
+                      {convertToDisplayTime(timeToSelect.time as Time)}
                     </p>
                   </Link>
                 ) : (
