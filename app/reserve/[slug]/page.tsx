@@ -4,11 +4,10 @@ import ReserveHeader from "./components/ReserveHeader";
 
 const Reserve = () => {
   return (
-    <main className="bg-gray-100 min-h-screen w-screen">
-      <main className="max-w-screen-2xl m-auto bg-white">
-        <NavBar />
-        <div className="border-t h-screen">
-          <div className="py-9 w-3/5 m-auto">
+    <main className="w-screen min-h-screen bg-gray-100">
+      <main className="bg-white max-w-screen-2xl">
+        <div className="h-screen border-t">
+          <div className="w-3/5 m-auto py-9">
             <ReserveHeader />
             <ReserveForm />
           </div>

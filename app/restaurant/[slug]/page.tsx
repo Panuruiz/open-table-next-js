@@ -22,6 +22,8 @@ type RestaurantPageType = {
   images: string[];
   slug: string;
   reviews: Review[];
+  open_time: string;
+  close_time: string;
 };
 
 const prisma = new PrismaClient();
@@ -40,6 +42,8 @@ const fetchRestaurantBySlug = async (
       images: true,
       slug: true,
       reviews: true,
+      open_time: true,
+      close_time: true,
     },
   });
 
@@ -69,7 +73,11 @@ const RestaurantDetails = async ({ params }: RestaurantPageProps) => {
           </Reviews>
         )}
       </div>
-      <ReservationsCard />
+      <ReservationsCard
+        openTime={restaurant.open_time}
+        closeTime={restaurant.close_time}
+        slug={restaurant.slug}
+      />
     </>
   );
 };
