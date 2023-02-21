@@ -43,17 +43,19 @@ const fetchRestaurantsByLocation = (searchParams: SearchParams) => {
   }
 
   if (searchParams.cuisine) {
-    where.cuisine = {
+    const cuisine = {
       name: {
         equals: searchParams.cuisine.toLowerCase(),
       },
     };
+    where.cuisine = cuisine;
   }
 
   if (searchParams.priceRange) {
-    where.price_range = {
+    const priceRange = {
       equals: searchParams.priceRange,
     };
+    where.price_range = priceRange;
   }
 
   const select = {

@@ -24,17 +24,17 @@ const SearchSideBar = ({
 }: SearchSideBarProps) => {
   const prices = [
     {
-      price: PRICE_RANGE.CHEAP,
+      price_range: PRICE_RANGE.CHEAP,
       label: "$",
       className: "w-full text-center p-2 font-light border rounded-l text-reg",
     },
     {
-      price: PRICE_RANGE.REGULAR,
+      price_range: PRICE_RANGE.REGULAR,
       label: "$$",
       className: "w-full text-center p-2 font-light border text-reg",
     },
     {
-      price: PRICE_RANGE.EXPENSIVE,
+      price_range: PRICE_RANGE.EXPENSIVE,
       label: "$$$",
       className: "w-full text-center p-2 font-light border rounded-r text-reg",
     },
@@ -87,10 +87,10 @@ const SearchSideBar = ({
                 pathname: "/search",
                 query: {
                   ...searchParams,
-                  priceRange: price.price,
+                  priceRange: price.price_range,
                 },
               }}
-              key={price.price}
+              key={price.price_range}
               className={price.className}
             >
               {price.label}
