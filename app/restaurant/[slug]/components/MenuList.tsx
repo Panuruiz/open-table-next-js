@@ -2,7 +2,7 @@ import { Item } from "@prisma/client";
 import MenuItem from "./MenuItem";
 
 type MenuListProps = {
-  items: Item[];
+  items?: Item[];
 };
 
 const MenuList = ({ items }: MenuListProps) => {
@@ -13,7 +13,7 @@ const MenuList = ({ items }: MenuListProps) => {
           <h1 className="text-4xl font-bold">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          {items.length ? (
+          {items?.length ? (
             items.map((item) => <MenuItem key={item.id} item={item} />)
           ) : (
             <p className="text-lg font-bold">
