@@ -5,7 +5,6 @@ type MenuItemProps = {
 };
 
 const MenuItem = ({ item }: MenuItemProps) => {
-  console.log(item);
   return (
     <div className=" border rounded p-3 w-[49%] mb-3">
       <h3 className="text-lg font-bold">{item.name}</h3>

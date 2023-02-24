@@ -29,7 +29,7 @@ const ReservationsCard = ({
   const [day, setDay] = useState<string>(
     new Date().toISOString().split("T")[0]
   );
-  console.log(data);
+
   const handleChangeDate = (date: Date | null) => {
     if (date) {
       setDay(date.toISOString().split("T")[0]);
