@@ -33,7 +33,11 @@ const RestaurantMenu = async ({ params }: MenuProps) => {
   return (
     <div className="bg-white w-[100%] rounded p-3 shadow">
       <RestaurantNavBar slug={params.slug} />
-      <MenuList items={items} />
+      {items ? (
+        <MenuList items={items} />
+      ) : (
+        "This Restaurant doesn't have a Menu yet"
+      )}
     </div>
   );
 };
