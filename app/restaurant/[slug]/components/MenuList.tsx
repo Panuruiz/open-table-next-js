@@ -14,7 +14,7 @@ const MenuList = ({ items }: MenuListProps) => {
         </div>
         <div className="flex flex-wrap justify-between">
           {items?.length ? (
-            items.map((item) => <MenuItem key={item.id} item={item} />)
+            items?.map((item) => <MenuItem key={item.id} item={item} />)
           ) : (
             <p className="text-lg font-bold">
               This Restaurnt doesn't have a Menu
